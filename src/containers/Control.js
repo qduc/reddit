@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { fetchData } from '../actions/posts';
+import { changeSubreddit } from '../actions/subreddit';
 import { connect } from 'react-redux';
 
 class Control extends Component {
-	constructor() {
-		super();
-		this.setState = {
-			subreddit: this.props.subreddit
+	constructor(props) {
+		super(props);
+		this.state = {
+			subreddit: ''
 		};
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 	}
 
 	handleChange(e) {
@@ -15,15 +19,15 @@ class Control extends Component {
 	}
 
 	handleClick() {
-		// dispatch(changeSubreddit(this.state.subreddit));
+		this.props.dispatch(changeSubreddit(this.state.subreddit));
 		// dispatch(fetchData(this.state.subreddit));
-		this.props.submit(this.state.subreddit);
+		// this.props.submit(this.state.subreddit);
 	}
 
 	render(props) {
 		return (
 			<div>
-				<input type="text" onChange={this.handleChange}/>
+				<input type="text" value={this.props.subreddit} onChange={this.handleChange} />
 				<button 
 					onClick={this.handleClick}
 				>Reload</button>
@@ -37,6 +41,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
+	// changeSubreddit: changeSubreddit,
 	submit: fetchData
 }
 
